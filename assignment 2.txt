@@ -1,0 +1,128 @@
+1- Create function take name of person and say welcome to him 
+
+using System;
+
+class WelcomeProgram {
+    static void Main() {
+        Console.Write("Enter your name: ");
+        string name = Console.ReadLine();
+        Welcome(name);
+    }
+
+    static void Welcome(string name) {
+        Console.WriteLine($"Welcome, {name}!");
+    }
+}
+
+2-  create function which receive two values from user and print all arithmetic operation for those two numbers
+
+using System;
+
+class ArithmeticOperations {
+    static void Main() {
+        Console.Write("Enter the first number: ");
+        double firstNumber = double.Parse(Console.ReadLine());
+        
+        Console.Write("Enter the second number: ");
+        double secondNumber = double.Parse(Console.ReadLine());
+
+        PerformArithmeticOperations(firstNumber, secondNumber);
+    }
+
+    static void PerformArithmeticOperations(double a, double b) {
+        Console.WriteLine($"Addition: {a + b}");
+        Console.WriteLine($"Subtraction: {a - b}");
+        Console.WriteLine($"Multiplication: {a * b}");
+        
+        if (b != 0) {
+            Console.WriteLine($"Division: {a / b}");
+        } else {
+            Console.WriteLine("Division: Cannot divide by zero.");
+        }
+    }
+}
+
+3- create function ask user enter length of array and after that create array of this length and ask user to put each index of array , (values at array are integral)
+
+using System;
+
+class ArrayInput {
+    static void Main() {
+        Console.Write("Enter the length of the array: ");
+        int length = int.Parse(Console.ReadLine());
+
+        int[] numbers = CreateArray(length);
+        
+        Console.WriteLine("You entered the following values:");
+        foreach (int number in numbers) {
+            Console.WriteLine(number);
+        }
+    }
+
+    static int[] CreateArray(int length) {
+        int[] array = new int[length];
+
+        for (int i = 0; i < length; i++) {
+            Console.Write($"Enter value for index {i}: ");
+            array[i] = int.Parse(Console.ReadLine());
+        }
+
+        return array;
+    }
+}
+
+4- create Class Called Employee ,, Employee has Id , Name , Salary ,Bonus and Deduction as a properties of class Id is integer Name is string Salary is float Bonus is float Deduction is float  and create two function in this class first one to Calculate the salary of Employee , the second one is to print Employee Values 
+Net Salary Of Employee is =Salary+ Bonus – Deduction 
+create array of this class type 
+
+
+using System;
+
+class Employee {
+    // Properties
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public float Salary { get; set; }
+    public float Bonus { get; set; }
+    public float Deduction { get; set; }
+
+    // Method to calculate net salary
+    public float CalculateNetSalary() {
+        return Salary + Bonus - Deduction;
+    }
+
+    // Method to print employee values
+    public void PrintEmployeeDetails() {
+        Console.WriteLine($"ID: {Id}, Name: {Name}, Salary: {Salary}, Bonus: {Bonus}, Deduction: {Deduction}, Net Salary: {CalculateNetSalary()}");
+    }
+}
+
+class Program {
+    static void Main() {
+        Console.Write("Enter the number of employees: ");
+        int numberOfEmployees = int.Parse(Console.ReadLine());
+        
+        Employee[] employees = new Employee[numberOfEmployees];
+
+        for (int i = 0; i < numberOfEmployees; i++) {
+            employees[i] = new Employee();
+            Console.WriteLine($"\nEntering details for Employee {i + 1}:");
+            Console.Write("Enter ID: ");
+            employees[i].Id = int.Parse(Console.ReadLine());
+            Console.Write("Enter Name: ");
+            employees[i].Name = Console.ReadLine();
+            Console.Write("Enter Salary: ");
+            employees[i].Salary = float.Parse(Console.ReadLine());
+            Console.Write("Enter Bonus: ");
+            employees[i].Bonus = float.Parse(Console.ReadLine());
+            Console.Write("Enter Deduction: ");
+            employees[i].Deduction = float.Parse(Console.ReadLine());
+        }
+
+        Console.WriteLine("\nEmployee Details:");
+        foreach (var employee in employees) {
+            employee.PrintEmployeeDetails();
+        }
+    }
+}
+------------------------------------------------------------------------------------------------------------------------------------------

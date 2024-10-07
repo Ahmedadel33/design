@@ -1,0 +1,158 @@
+using System;
+
+public interface IAnimal
+{
+    void MakeSound();
+}
+
+public interface ICanFly
+{
+    void Fly();
+}
+
+// Abstract Class
+public abstract class Animal : IAnimal
+{
+    public string Name { get; set; }
+    public double Weight { get; set; }
+    public int Age { get; set; }
+
+    public abstract void MakeSound();
+}
+
+// Bird Class
+public class Bird : Animal, ICanFly, ICloneable, IComparable<Bird>
+{
+    private static int birdCount;
+
+    static Bird()
+    {
+        birdCount = 0;
+    }
+
+    public Bird()
+    {
+        birdCount++;
+    }
+
+    public Bird(string name, double weight, int age)
+    {
+        Name = name;
+        Weight = weight;
+        Age = age;
+        birdCount++;
+    }
+
+    public Bird(Bird bird)
+    {
+        Name = bird.Name;
+        Weight = bird.Weight;
+        Age = bird.Age;
+        birdCount++;
+    }
+
+    public static int BirdCount => birdCount;
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} says chirp!");
+    }
+
+    public void Fly()
+    {
+        Console.WriteLine($"{Name} is flying!");
+    }
+
+    public object Clone()
+    {
+        return new Bird(this);
+    }
+
+    public int CompareTo(Bird other)
+    {
+        return Weight.CompareTo(other.Weight);
+    }
+}
+
+// Dog Class
+public class Dog : Animal, ICloneable, IComparable<Dog>
+{
+    private static int dogCount;
+
+    static Dog()
+    {
+        dogCount = 0;
+    }
+
+    public Dog()
+    {
+        dogCount++;
+    }
+
+    public Dog(string name, double weight, int age)
+    {
+        Name = name;
+        Weight = weight;
+        Age = age;
+        dogCount++;
+    }
+
+    public Dog(Dog dog)
+    {
+        Name = dog.Name;
+        Weight = dog.Weight;
+        Age = dog.Age;
+        dogCount++;
+    }
+
+    public static int DogCount => dogCount;
+
+    public override void MakeSound()
+    {
+        Console.WriteLine($"{Name} says woof!");
+    }
+
+    public object Clone()
+    {
+        return new Dog(this);
+    }
+
+    public int CompareTo(Dog other)
+    {
+        return Weight.CompareTo(other.Weight);
+    }
+}
+
+// Example Usage
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create Bird instances
+        Bird bird1 = new Bird("Sparrow", 0.5, 1);
+        Bird bird2 = new Bird("Eagle", 3.0, 5);
+        Bird bird3 = (Bird)bird1.Clone();
+
+        bird1.MakeSound();
+        bird2.MakeSound();
+        bird1.Fly();
+        
+        Console.WriteLine($"Bird Count: {Bird.BirdCount}");
+        
+        // Compare Birds
+        Console.WriteLine($"{bird1.Name} is lighter than {bird2.Name}: {bird1.CompareTo(bird2) < 0}");
+
+        // Create Dog instances
+        Dog dog1 = new Dog("Buddy", 10.0, 3);
+        Dog dog2 = new Dog("Max", 15.0, 4);
+        Dog dog3 = (Dog)dog1.Clone();
+
+        dog1.MakeSound();
+        dog2.MakeSound();
+
+        Console.WriteLine($"Dog Count: {Dog.DogCount}");
+        
+        // Compare Dogs
+        Console.WriteLine($"{dog1.Name} is lighter than {dog2.Name}: {dog1.CompareTo(dog2) < 0}");
+    }
+}

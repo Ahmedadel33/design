@@ -1,0 +1,344 @@
+ahmed adel el tantawy
+
+------------------------------
+
+
+
+
+using System;
+
+public enum Leg
+{
+    Left,
+    Right
+}
+
+// Abstract Class
+public abstract class Person
+{
+    public string Name { get; set; }
+}
+
+// Sealed Class
+public sealed class Coach : Person
+{
+    public string Team { get; set; }
+
+    public void TrainPlayer(Player player)
+    {
+        Console.WriteLine($"{Name} is training {player.Name}.");
+        // Training logic can be added here
+    }
+}
+
+// Player Class
+public class Player : Person
+{
+    public int T_Shirt_Number { get; set; }
+    public string Team { get; set; }
+    public int Age { get; set; }
+    public Leg R_L_Leg { get; set; }
+    public bool HasBall { get; set; }
+
+    public void PassBall(Player receiver)
+    {
+        if (HasBall)
+        {
+            Console.WriteLine($"{Name} passes the ball to {receiver.Name}.");
+            receiver.HasBall = true;
+            HasBall = false;
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot pass the ball because they don't have it.");
+        }
+    }
+
+    public void ShootBall()
+    {
+        if (HasBall)
+        {
+            Console.WriteLine($"{Name} shoots the ball towards the goal!");
+            // Shooting logic can be added here
+            HasBall = false; // After shooting, the player no longer has the ball
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot shoot the ball because they don't have it.");
+        }
+    }
+}
+
+
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Player player1 = new Player
+        {
+            Name = "John Doe",
+            T_Shirt_Number = 10,
+            Team = "Team A",
+            Age = 25,
+            R_L_Leg = Leg.Right,
+            HasBall = true
+        };
+
+        Player player2 = new Player
+        {
+            Name = "Jane Smith",
+            T_Shirt_Number = 11,
+            Team = "Team A",
+            Age = 22,
+            R_L_Leg = Leg.Left,
+            HasBall = false
+        };
+
+        Coach coach = new Coach
+        {
+            Name = "Coach Mike",
+            Team = "Team A"
+        };
+
+        // Coach trains player
+        coach.TrainPlayer(player1);
+
+        // Player passes the ball
+        player1.PassBall(player2);
+
+        // Player attempts to shoot
+        player2.ShootBall(); // Should indicate they don't have the ball
+        player2.PassBall(player1); // Player2 should pass to player1
+        player1.ShootBall(); // Player1 should shoot the ball
+    }
+}
+----------
+using System;
+using System.Collections.Generic;
+
+// Enums
+public enum Leg
+{
+    Left,
+    Right
+}
+
+// Interfaces
+public interface IComparable<T>
+{
+    int CompareTo(T other);
+}
+
+public interface ITraining
+{
+    void DoTraining();
+}
+
+// Abstract Class
+public abstract class Person
+{
+    public string Name { get; set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
+}
+
+// Sealed Class
+public sealed class Coach : Person, ITraining
+{
+    public string Team { get; set; }
+
+    public void TrainPlayer(Player player)
+    {
+        Console.WriteLine($"{Name} is training {player.Name}.");
+    }
+
+    public void DoTraining()
+    {
+        Console.WriteLine($"{Name} is conducting a training session.");
+    }
+
+    public override string ToString()
+    {
+        return $"{Name}, Coach of {Team}";
+    }
+}
+
+// Player Class
+public class Player : Person, IComparable<Player>
+{
+    public int T_Shirt_Number { get; set; }
+    public string Team { get; set; }
+    public int Age { get; set; }
+    public Leg R_L_Leg { get; set; }
+    public bool HasBall { get; set; }
+
+    public void PassBall(Player receiver)
+    {
+        if (HasBall)
+        {
+            Console.WriteLine($"{Name} passes the ball to {receiver.Name}.");
+            receiver.HasBall = true;
+            HasBall = false;
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot pass the ball because they don't have it.");
+        }
+    }
+
+    public void ShootBall()
+    {
+        if (HasBall)
+        {
+            Console.WriteLine($"{Name} shoots the ball towards the goal!");
+            HasBall = false; // After shooting, the player no longer has the ball
+        }
+        else
+        {
+            Console.WriteLine($"{Name} cannot shoot the ball because they don't have it.");
+        }
+    }
+
+    public int CompareTo(Player other)
+    {
+        return Age.CompareTo(other.Age);
+    }
+
+    public override string ToString()
+    {
+        return $"{Name}, Age: {Age}, Team: {Team}, T-Shirt: {T_Shirt_Number}";
+    }
+}
+
+// Ball Class
+public class Ball
+{
+    public Player Possessor { get; set; }
+    public bool IsInPlay { get; set; } = true;
+
+    public override string ToString()
+    {
+        return Possessor != null ? $"{Possessor.Name} has the ball." : "The ball is not possessed.";
+    }
+}
+
+// Team Class
+public class Team
+{
+    public string Name { get; set; }
+    public List<Player> Players { get; set; } = new List<Player>();
+    public Coach Coach { get; set; }
+
+    public void AddPlayer(Player player)
+    {
+        Players.Add(player);
+        player.Team = Name;
+        Console.WriteLine($"{player.Name} has been added to {Name}.");
+    }
+
+    public void RemovePlayer(Player player)
+    {
+        if (Players.Remove(player))
+        {
+            Console.WriteLine($"{player.Name} has been removed from {Name}.");
+        }
+        else
+        {
+            Console.WriteLine($"{player.Name} is not part of {Name}.");
+        }
+    }
+
+    public override string ToString()
+    {
+        return $"Team: {Name}, Coach: {Coach?.Name}, Players: {Players.Count}";
+    }
+}
+
+// Match Class
+public class Match
+{
+    public Team HomeTeam { get; set; }
+    public Team AwayTeam { get; set; }
+
+    // Static Constructor
+    static Match()
+    {
+        Console.WriteLine("The match will start on time!");
+    }
+
+    public void StartMatch()
+    {
+        Console.WriteLine($"The match between {HomeTeam.Name} and {AwayTeam.Name} has started!");
+    }
+
+    public void EndMatch()
+    {
+        // Here you can implement logic to determine the winner
+        Console.WriteLine($"The match between {HomeTeam.Name} and {AwayTeam.Name} has ended!");
+    }
+}
+
+// Stadium Class
+public static class Stadium
+{
+    public static string Name { get; set; }
+    public static long Capacity { get; set; }
+
+    public static void HostMatch(Team homeTeam, Team awayTeam)
+    {
+        Match match = new Match { HomeTeam = homeTeam, AwayTeam = awayTeam };
+        match.StartMatch();
+        // Match logic can be implemented here
+    }
+}
+
+// Console Application
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Setup
+        Stadium.Name = "National Stadium";
+        Stadium.Capacity = 50000;
+
+        Team teamA = new Team { Name = "Team A" };
+        Team teamB = new Team { Name = "Team B" };
+
+        Coach coachA = new Coach { Name = "Coach Mike", Team = "Team A" };
+        Coach coachB = new Coach { Name = "Coach Sarah", Team = "Team B" };
+        
+        teamA.Coach = coachA;
+        teamB.Coach = coachB;
+
+        // Add players
+        teamA.AddPlayer(new Player { Name = "John Doe", T_Shirt_Number = 10, Age = 25, R_L_Leg = Leg.Right });
+        teamA.AddPlayer(new Player { Name = "Alex Smith", T_Shirt_Number = 9, Age = 28, R_L_Leg = Leg.Left });
+        
+        teamB.AddPlayer(new Player { Name = "Emily Davis", T_Shirt_Number = 11, Age = 22, R_L_Leg = Leg.Right });
+        teamB.AddPlayer(new Player { Name = "Michael Johnson", T_Shirt_Number = 7, Age = 30, R_L_Leg = Leg.Left });
+
+        // Start match
+        Stadium.HostMatch(teamA, teamB);
+
+        // Simulate training
+        coachA.TrainPlayer(teamA.Players[0]);
+        coachB.TrainPlayer(teamB.Players[0]);
+
+        // Player actions
+        Player playerA1 = teamA.Players[0];
+        Player playerB1 = teamB.Players[0];
+
+        playerA1.HasBall = true;
+        playerA1.PassBall(playerB1);
+        playerB1.ShootBall();
+
+        // End match
+        Match match = new Match { HomeTeam = teamA, AwayTeam = teamB };
+        match.EndMatch();
+    }
+}

@@ -1,0 +1,357 @@
+             my name is ahmed adel
+
+
+
+ 1- Basic Inheritance Implementation:
+
+Create a base class Animal with a method MakeSound() that prints "Some
+generic animal sound". Then create a derived class Dog that inherits from Animal
+and has its own method Bark().
+
+using System;
+
+class Animal {
+    // Method in the base class
+    public virtual void MakeSound() {
+        Console.WriteLine("Some generic animal sound");
+    }
+}
+
+class Dog : Animal {
+    // Method in the derived class
+    public void Bark() {
+        Console.WriteLine("Woof! Woof!");
+    }
+
+    // Override the MakeSound method
+    public override void MakeSound() {
+        Console.WriteLine("Dog sound: Woof!");
+    }
+}
+
+class Program {
+    static void Main() {
+        // Create an instance of Animal
+        Animal genericAnimal = new Animal();
+        genericAnimal.MakeSound(); // Output: Some generic animal sound
+
+        // Create an instance of Dog
+        Dog dog = new Dog();
+        dog.MakeSound(); // Output: Dog sound: Woof!
+        dog.Bark(); // Output: Woof! Woof!
+    }
+}
+
+                 2-  Overriding Methods using virtual and override:
+    Task: Modify the MakeSound() method in the Animal class to be virtual. Then,
+override this method in the Dog class to print "Bark".
+
+using System;
+
+class Animal {
+    // MakeSound method is now virtual
+    public virtual void MakeSound() {
+        Console.WriteLine("Some generic animal sound");
+    }
+}
+
+class Dog : Animal {
+    // Override the MakeSound method
+    public override void MakeSound() {
+        Console.WriteLine("Bark");
+    }
+}
+
+class Program {
+    static void Main() {
+        // Create an instance of Animal
+        Animal genericAnimal = new Animal();
+        genericAnimal.MakeSound(); // Output: Some generic animal sound
+
+        // Create an instance of Dog
+        Dog dog = new Dog();
+        dog.MakeSound(); // Output: Bark
+    }
+}
+  
+                3-Creating a Simple Hierarchy:
+Task: Create a class hierarchy where Animal is the base class, and Dog, Cat, and
+Bird are derived classes. Each derived class should override the MakeSound()
+method to print different sounds specific to the animal.
+
+   using System;
+
+class Animal {
+    // Virtual method to be overridden
+    public virtual void MakeSound() {
+        Console.WriteLine("Some generic animal sound");
+    }
+}
+
+class Dog : Animal {
+    // Override the MakeSound method for Dog
+    public override void MakeSound() {
+        Console.WriteLine("Bark");
+    }
+}
+
+class Cat : Animal {
+    // Override the MakeSound method for Cat
+    public override void MakeSound() {
+        Console.WriteLine("Meow");
+    }
+}
+
+class Bird : Animal {
+    // Override the MakeSound method for Bird
+    public override void MakeSound() {
+        Console.WriteLine("Chirp");
+    }
+}
+
+class Program {
+    static void Main() {
+        // Create instances of each animal
+        Animal myDog = new Dog();
+        Animal myCat = new Cat();
+        Animal myBird = new Bird();
+
+        // Call MakeSound on each instance
+        myDog.MakeSound(); // Output: Bark
+        myCat.MakeSound(); // Output: Meow
+        myBird.MakeSound(); // Output: Chirp
+    }
+}
+
+
+           4-Using Abstract Classes and Methods:
+
+Task: Create an abstract class Shape with an abstract method CalculateArea().
+Then, create derived classes Rectangle, Circle, and Triangle, each implementing the
+CalculateArea() method.
+
+    using System;
+
+abstract class Shape {
+    // Abstract method
+    public abstract double CalculateArea();
+}
+
+class Rectangle : Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    // Implement CalculateArea for Rectangle
+    public override double CalculateArea() {
+        return width * height;
+    }
+}
+
+class Circle : Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    // Implement CalculateArea for Circle
+    public override double CalculateArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Triangle : Shape {
+    private double baseLength;
+    private double height;
+
+    public Triangle(double baseLength, double height) {
+        this.baseLength = baseLength;
+        this.height = height;
+    }
+
+    // Implement CalculateArea for Triangle
+    public override double CalculateArea() {
+        return 0.5 * baseLength * height;
+    }
+}
+
+class Program {
+    static void Main() {
+        Shape rectangle = new Rectangle(5, 10);
+        Shape circle = new Circle(7);
+        Shape triangle = new Triangle(4, 8);
+
+        Console.WriteLine($"Area of Rectangle: {rectangle.CalculateArea()}");
+        Console.WriteLine($"Area of Circle: {circle.CalculateArea()}");
+        Console.WriteLine($"Area of Triangle: {triangle.CalculateArea()}");
+    }
+}
+
+          
+            5-Polymorphism with Abstract Classes:
+
+Task: Create a list of Shape objects containing instances of Rectangle, Circle, and
+Triangle. Iterate through the list and print the area of each shape using the
+CalculateArea() method.
+
+
+using System;
+using System.Collections.Generic;
+
+abstract class Shape {
+    public abstract double CalculateArea();
+}
+
+class Rectangle : Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public override double CalculateArea() {
+        return width * height;
+    }
+}
+
+class Circle : Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public override double CalculateArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Triangle : Shape {
+    private double baseLength;
+    private double height;
+
+    public Triangle(double baseLength, double height) {
+        this.baseLength = baseLength;
+        this.height = height;
+    }
+
+    public override double CalculateArea() {
+        return 0.5 * baseLength * height;
+    }
+}
+
+class Program {
+    static void Main() {
+        // Create a list of Shape objects
+        List<Shape> shapes = new List<Shape>();
+
+        // Add instances of Rectangle, Circle, and Triangle
+        shapes.Add(new Rectangle(5, 10));
+        shapes.Add(new Circle(7));
+        shapes.Add(new Triangle(4, 8));
+
+        // Iterate through the list and print the area of each shape
+        foreach (Shape shape in shapes) {
+            Console.WriteLine($"Area: {shape.CalculateArea()}");
+        }
+    }
+}
+
+
+       6-Advanced Method Overriding:
+
+
+Advanced Method Overriding:
+
+using System;
+
+class Employee {
+    public virtual double CalculateBonus() {
+        return 0; // Default bonus calculation
+    }
+}
+
+class Manager : Employee {
+    private double salary;
+
+    public Manager(double salary) {
+        this.salary = salary;
+    }
+
+    // Override CalculateBonus for Manager
+    public override double CalculateBonus() {
+        return salary * 0.10; // 10% of salary
+    }
+}
+
+class Developer : Employee {
+    private double salary;
+
+    public Developer(double salary) {
+        this.salary = salary;
+    }
+
+    // Override CalculateBonus for Developer
+    public override double CalculateBonus() {
+        return salary * 0.15; // 15% of salary
+    }
+}
+
+class Intern : Employee {
+    private double stipend;
+
+    public Intern(double stipend) {
+        this.stipend = stipend;
+    }
+
+    // Override CalculateBonus for Intern
+    public override double CalculateBonus() {
+        return stipend * 0.05; // 5% of stipend
+    }
+}
+
+class Program {
+    static void Main() {
+        Employee manager = new Manager(80000);
+        Employee developer = new Developer(60000);
+        Employee intern = new Intern(20000);
+
+        Console.WriteLine($"Manager Bonus: {manager.CalculateBonus()}");
+        Console.WriteLine($"Developer Bonus: {developer.CalculateBonus()}");
+        Console.WriteLine($"Intern Bonus: {intern.CalculateBonus()}");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

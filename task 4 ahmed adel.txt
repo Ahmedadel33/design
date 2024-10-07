@@ -1,0 +1,64 @@
+using System;
+
+public class Person
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public int Age { get; set; }
+
+    public virtual string GetDetails()
+    {
+        return $"Name: {FirstName} {LastName}, Age: {Age}";
+    }
+}
+
+public class Student : Person
+{
+    public int StudentID { get; set; }
+    public double GPA { get; set; }
+
+    public override string GetDetails()
+    {
+        return $"Name: {FirstName} {LastName}, Age: {Age}, Student ID: {StudentID}, GPA: {GPA:F2}";
+    }
+
+    public string GetDetails(bool includeGPA)
+    {
+        if (includeGPA)
+        {
+            return GetDetails(); // Calls the overridden method
+        }
+        else
+        {
+            return $"Name: {FirstName} {LastName}, Age: {Age}, Student ID: {StudentID}";
+        }
+    }
+}
+
+// Example Usage
+class Program
+{
+    static void Main(string[] args)
+    {
+        Person person = new Person
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Age = 30
+        };
+
+        Student student = new Student
+        {
+            FirstName = "Jane",
+            LastName = "Smith",
+            Age = 22,
+            StudentID = 12345,
+            GPA = 3.75
+        };
+
+        Console.WriteLine(person.GetDetails());
+        Console.WriteLine(student.GetDetails());
+        Console.WriteLine(student.GetDetails(false));
+        Console.WriteLine(student.GetDetails(true));
+    }
+}
